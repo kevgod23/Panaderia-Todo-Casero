@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panadería Todo Casero</title>
+  <meta name="description" content="Más de 26 años horneando los mejores churros, tortas fritas, facturas y panes artesanales en Corrientes 156, Paraná, Entre Ríos." />
+
+  <!-- Favicon / Ícono de la pestaña con respaldo automático -->
+  <link id="dynamic-favicon" rel="icon" type="image/jpeg" href="logo.png.jpg" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cafe: {
+              900: '#2A1506',
+              800: '#3B200B',
+              700: '#4A2C11',
+              600: '#693F1A',
+            },
+            ambar: {
+              600: '#D97706',
+              500: '#F59E0B',
+              100: '#FEF3C7',
+            },
+            crema: {
+              50: '#FDFBF7',
+              100: '#F5EFEB',
+              200: '#E8DEC8',
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FDFBF7;
+      color: #3B200B;
+    }
+    .hero-bg {
+      background-image: linear-gradient(to bottom, rgba(42, 21, 6, 0.74), rgba(59, 32, 11, 0.88)), url('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes bounce-short {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+    }
+    .cart-bump {
+      animation: bounce-short 0.25s ease-in-out;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-ambar-600 selection:text-white pb-24">
+
+  <!-- ================= 1. NAVBAR / ENCABEZADO ================= -->
+  <header class="fixed top-0 left-0 right-0 z-40 bg-crema-50/95 backdrop-blur-md border-b border-crema-200 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        
+        <!-- Logo Oficial Todo Casero -->
+        <a href="#" class="flex items-center gap-3 group">
+          <img src="logo.png.jpg" 
+               onerror="handleLogoError(this)"
+               alt="Logo Panadería Todo Casero" 
+               class="w-13 h-13 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-ambar-600 shadow-md transition-transform group-hover:scale-105" />
+          <div>
+            <span class="font-serif text-xl sm:text-2xl font-bold text-cafe-800 tracking-tight block leading-none">Todo Casero</span>
+            <span class="text-[11px] sm:text-xs text-cafe-600 font-medium tracking-wider uppercase">Desde 1999 • Paraná</span>
+          </div>
+        </a>
+
+        <!-- Links de Navegación (Desktop) -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#historia" class="text-cafe-700 hover:text-ambar-600 font-medium transition-colors">Historia</a>
+          <a href="#productos" class="text-cafe-700 hover:text-ambar-600 font-medium transition-colors">Catálogo y Pedidos</a>
+          <a href="#horarios" class="text-cafe-700 hover:text-ambar-600 font-medium transition-colors">Horarios y Pagos</a>
+          <a href="#ubicacion" class="text-cafe-700 hover:text-ambar-600 font-medium transition-colors">Ubicación</a>
+        </nav>
+
+        <!-- Acciones Derecha (Botón Carrito + Menú Móvil) -->
+        <div class="flex items-center gap-3">
+          <button onclick="openCartModal()" id="nav-cart-btn"
+                  class="relative inline-flex items-center gap-2.5 bg-cafe-800 hover:bg-ambar-600 text-white font-semibold px-4 sm:px-5 py-2.5 rounded-full shadow-sm transition-all duration-200">
+            <i class="fa-solid fa-basket-shopping text-amber-400"></i>
+            <span class="hidden sm:inline text-sm">Mi Pedido</span>
+            <span id="nav-cart-count" class="bg-ambar-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">
+              0
+            </span>
+          </button>
+
+          <!-- Botón Menú Móvil -->
+          <button id="mobile-menu-btn" class="md:hidden text-cafe-800 p-2 rounded-xl hover:bg-crema-100 focus:outline-none" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars text-2xl"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Menú Desplegable Móvil -->
+    <div id="mobile-menu" class="hidden md:hidden bg-crema-50 border-b border-crema-200 px-4 pt-2 pb-6 space-y-3 shadow-lg">
+      <a href="#historia" class="mobile-link block py-2 text-base font-medium text-cafe-800 border-b border-crema-100">Nuestra Historia</a>
+      <a href="#productos" class="mobile-link block py-2 text-base font-medium text-cafe-800 border-b border-crema-100">Catálogo y Precios</a>
+      <a href="#horarios" class="mobile-link block py-2 text-base font-medium text-cafe-800 border-b border-crema-100">Horarios y Pagos</a>
+      <a href="#ubicacion" class="mobile-link block py-2 text-base font-medium text-cafe-800 pb-2">Ubicación</a>
+      <a href="https://wa.me/5493434671607?text=Hola%20Panader%C3%ADa%20Todo%20Casero!%20Quiero%20hacer%20una%20consulta." target="_blank" rel="noopener noreferrer"
+         class="flex items-center justify-center gap-2 w-full bg-green-600 text-white font-semibold py-3 rounded-xl shadow-md">
+        <i class="fa-brands fa-whatsapp text-xl"></i>
+        <span>Consulta directa por WhatsApp</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ================= 2. HERO SECTION (PORTADA) ================= -->
+  <section class="hero-bg relative pt-32 pb-20 md:pt-40 md:pb-28 text-crema-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      
+      <div class="inline-flex items-center gap-2 bg-ambar-600/20 border border-ambar-500/40 backdrop-blur-sm px-4 py-1.5 rounded-full text-ambar-100 text-sm font-medium mb-6">
+        <i class="fa-solid fa-location-dot text-ambar-500"></i>
+        <span>Tradición en Corrientes 156, Paraná, Entre Ríos</span>
+      </div>
+
+      <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-bold max-w-4xl mx-auto leading-tight mb-6">
+        El sabor de nuestra casa en tu mesa desde 1999
+      </h1>
+
+      <p class="text-lg sm:text-xl text-crema-100/90 max-w-2xl mx-auto mb-10 font-normal leading-relaxed">
+        Más de 26 años endulzando las mañanas y tardes de Paraná con nuestros clásicos churros, tortas fritas calentitas, facturas y elaboración 100% artesanal.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
+        <a href="#productos" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-ambar-600 hover:bg-ambar-500 text-white font-bold px-8 py-4 rounded-full text-lg shadow-lg transition-all transform hover:-translate-y-0.5">
+          <i class="fa-solid fa-basket-shopping"></i>
+          <span>Armar mi Pedido Online</span>
+        </a>
+        <a href="https://wa.me/5493434671607?text=Hola%20Todo%20Casero!%20Quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener noreferrer"
+           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-semibold px-8 py-4 rounded-full text-lg transition-all">
+          <i class="fa-brands fa-whatsapp text-green-400 text-xl"></i>
+          <span>Escribir por WhatsApp</span>
+        </a>
+      </div>
+
+      <!-- Badges de Confianza -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto pt-8 border-t border-white/15">
+        <div class="flex items-center justify-center gap-3 bg-black/25 backdrop-blur-sm py-3 px-4 rounded-2xl">
+          <i class="fa-solid fa-award text-ambar-500 text-2xl"></i>
+          <div class="text-left">
+            <p class="font-bold text-white text-sm">+26 Años de Historia</p>
+            <p class="text-xs text-crema-200">Desde 1999 en Paraná</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-center gap-3 bg-black/25 backdrop-blur-sm py-3 px-4 rounded-2xl">
+          <i class="fa-solid fa-wheat-awn text-ambar-500 text-2xl"></i>
+          <div class="text-left">
+            <p class="font-bold text-white text-sm">Elaboración 100% Propia</p>
+            <p class="text-xs text-crema-200">Horneado cada día</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-center gap-3 bg-black/25 backdrop-blur-sm py-3 px-4 rounded-2xl">
+          <i class="fa-solid fa-heart text-ambar-500 text-2xl"></i>
+          <div class="text-left">
+            <p class="font-bold text-white text-sm">Atención Calificada</p>
+            <p class="text-xs text-crema-200">Calidez familiar de barrio</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 3. SECCIÓN DE HISTORIA ================= -->
+  <section id="historia" class="py-20 bg-crema-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <div class="space-y-6">
+          <div class="inline-flex items-center gap-2 text-ambar-600 font-semibold text-sm uppercase tracking-wider">
+            <span class="w-8 h-[2px] bg-ambar-600"></span>
+            <span>Nuestra Historia</span>
+          </div>
+          
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-cafe-800 leading-tight">
+            Más de 26 años llevando alegría y sabores caseros a calle Corrientes
+          </h2>
+
+          <p class="text-cafe-700 leading-relaxed text-base sm:text-lg">
+            Nuestra historia comenzó en <strong>1999</strong> con una receta simple, esfuerzo familiar y un sueño enorme: acompañar los mates de Paraná vendiendo lo que mejor sabíamos hacer: <strong>tortas fritas doradas, churros crocantes y bolas de fraile recién hechas</strong>.
+          </p>
+
+          <p class="text-cafe-700 leading-relaxed text-base sm:text-lg">
+            Con el paso de los años nos fuimos reinventando junto a nuestros vecinos. Incorporamos panes artesanales de masa madre, facturas, masitas finas y tortas para celebraciones, pero <strong>sin dejar jamás de hornear esos clásicos calentitos que nos caracterizan desde el primer día</strong>.
+          </p>
+
+          <div class="bg-crema-100 border-l-4 border-ambar-600 p-5 rounded-r-2xl">
+            <p class="italic text-cafe-800 font-serif text-lg">
+              "En Todo Casero no solo horneamos pan; horneamos recuerdos, tardes de lluvia con tortas fritas y el aroma inconfundible a hogar."
+            </p>
+          </div>
+
+          <div class="pt-2 flex flex-wrap gap-6 text-sm font-semibold text-cafe-800">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check-circle text-ambar-600 text-lg"></i>
+              <span>Elaboración artesanal propia</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check-circle text-ambar-600 text-lg"></i>
+              <span>Ingredientes frescos</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-check-circle text-ambar-600 text-lg"></i>
+              <span>Atención cálida y rápida</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1000&q=80" 
+                 alt="Elaboración artesanal en Panadería Todo Casero" 
+                 class="img-historia w-full h-[420px] sm:h-[480px] object-cover hover:scale-105 transition-transform duration-700" />
+          </div>
+          
+          <div class="absolute -bottom-6 -left-4 sm:-left-6 bg-cafe-800 text-white p-6 rounded-2xl shadow-xl border border-ambar-500/30 max-w-xs">
+            <div class="flex items-center gap-4">
+              <div class="bg-ambar-600 text-white font-serif font-bold text-3xl w-14 h-14 rounded-xl flex items-center justify-center shrink-0">
+                26
+              </div>
+              <div>
+                <p class="font-bold text-base leading-snug">Años de Historia</p>
+                <p class="text-xs text-crema-200 mt-0.5">Corrientes 156, Paraná</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. CATÁLOGO INTERACTIVO CON CARRITO ================= -->
+  <section id="productos" class="py-20 bg-crema-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Encabezado -->
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <div class="inline-flex items-center gap-2 bg-ambar-100 text-ambar-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+          <span class="w-2 h-2 rounded-full bg-ambar-600 animate-ping"></span>
+          <span id="sheet-status">Precios Actualizados en Vivo</span>
+          <button onclick="loadProducts(true)" title="Actualizar catálogo ahora" class="ml-1 hover:text-cafe-800 transition-colors">
+            <i id="refresh-icon" class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-cafe-800 mb-3">
+          Armá tu Pedido Online
+        </h2>
+        <p class="text-cafe-700 text-base sm:text-lg">
+          Sumá los productos que quieras con los botones <strong>+</strong> y <strong>−</strong> y enviá tu pedido listo por WhatsApp en un clic.
+        </p>
+      </div>
+
+      <!-- Barra de Categorías (Deslizable con rueda del mouse y táctil) + Buscador -->
+      <div class="flex flex-col lg:flex-row gap-4 justify-between items-center mb-10">
+        
+        <div class="relative w-full lg:flex-1 overflow-hidden">
+          <div id="category-filters" 
+               title="Podés girar la ruedita del mouse para deslizar las categorías"
+               class="flex items-center gap-2.5 overflow-x-auto no-scrollbar py-2 px-1 cursor-grab active:cursor-grabbing select-none">
+            <!-- Categorías generadas automáticamente -->
+          </div>
+        </div>
+
+        <!-- Buscador -->
+        <div class="relative w-full lg:w-80 shrink-0">
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-cafe-600"></i>
+          <input type="text" id="search-input" placeholder="Buscar churros, tortas fritas, pan..." 
+                 class="w-full pl-11 pr-4 py-3 rounded-full bg-white border border-crema-200 focus:border-ambar-600 focus:ring-2 focus:ring-ambar-600/20 focus:outline-none text-sm text-cafe-800 shadow-sm" />
+        </div>
+      </div>
+
+      <!-- Grilla de Productos -->
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Tarjetas renderizadas dinámicamente -->
+      </div>
+
+      <!-- Estado Vacío -->
+      <div id="empty-state" class="hidden text-center py-16 bg-white rounded-3xl border border-crema-200 my-4">
+        <i class="fa-solid fa-cookie-bite text-4xl text-ambar-600 mb-3"></i>
+        <h3 class="font-serif text-xl font-bold text-cafe-800 mb-1">No encontramos ese producto</h3>
+        <p class="text-cafe-600 text-sm mb-4">Probá buscando con otra palabra o mirá todas las categorías.</p>
+        <button onclick="resetFilters()" class="text-sm font-semibold text-ambar-600 hover:underline">
+          Ver todos los productos
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 5. MEDIOS DE PAGO Y HORARIOS ================= -->
+  <section id="horarios" class="py-20 bg-crema-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        
+        <!-- Cuadro de Horarios -->
+        <div class="bg-cafe-800 text-crema-50 rounded-3xl p-8 sm:p-10 shadow-xl relative overflow-hidden">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-ambar-600 flex items-center justify-center text-white text-xl">
+                <i class="fa-regular fa-clock"></i>
+              </div>
+              <div>
+                <h3 class="font-serif text-2xl font-bold">Horarios de Atención</h3>
+                <p class="text-xs text-crema-200">Mañana y tarde en calle Corrientes</p>
+              </div>
+            </div>
+            <span id="open-status-badge" class="px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 text-crema-100">
+              Horarios Habituales
+            </span>
+          </div>
+
+          <div class="space-y-5 mt-8">
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <p class="font-bold text-lg text-amber-400">Lunes a Sábados</p>
+                <p class="text-xs text-crema-200">Horario cortado</p>
+              </div>
+              <div class="text-left sm:text-right font-semibold text-sm sm:text-base space-y-1">
+                <p><i class="fa-regular fa-sun text-amber-400 mr-1.5"></i> 06:45 a 14:30 hs</p>
+                <p><i class="fa-solid fa-mug-hot text-amber-400 mr-1.5"></i> 16:00 a 21:30 hs</p>
+              </div>
+            </div>
+
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <p class="font-bold text-lg text-amber-400">Domingos</p>
+                <p class="text-xs text-crema-200">Especial tardes de mate</p>
+              </div>
+              <div class="text-left sm:text-right font-semibold text-sm sm:text-base">
+                <p><i class="fa-solid fa-mug-hot text-amber-400 mr-1.5"></i> 16:00 a 21:30 hs</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-xs text-crema-200/80 mt-6 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400"></i>
+            <span>Armá tu carrito en la web, mandanos el pedido por WhatsApp y te lo preparamos para retirar.</span>
+          </p>
+        </div>
+
+        <!-- Cuadro de Medios de Pago -->
+        <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-lg border border-crema-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-12 h-12 rounded-2xl bg-ambar-100 text-ambar-600 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-wallet"></i>
+              </div>
+              <div>
+                <h3 class="font-serif text-2xl font-bold text-cafe-800">Medios de Pago</h3>
+                <p class="text-xs text-cafe-600">Todas las facilidades disponibles</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+              <div class="bg-crema-50 border border-crema-200 rounded-2xl p-5 text-center hover:border-ambar-600 transition-colors">
+                <div class="w-12 h-12 mx-auto rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xl mb-3">
+                  <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+                <h4 class="font-bold text-cafe-800 text-base">Efectivo</h4>
+                <p class="text-xs text-cafe-600 mt-1">Aboná al retirar en el local</p>
+              </div>
+
+              <div class="bg-crema-50 border border-crema-200 rounded-2xl p-5 text-center hover:border-ambar-600 transition-colors">
+                <div class="w-12 h-12 mx-auto rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xl mb-3">
+                  <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+                <h4 class="font-bold text-cafe-800 text-base">Transferencia</h4>
+                <p class="text-xs text-cafe-600 mt-1">Mercado Pago y todas las billeteras</p>
+              </div>
+
+              <div class="bg-crema-50 border border-crema-200 rounded-2xl p-5 text-center hover:border-ambar-600 transition-colors">
+                <div class="w-12 h-12 mx-auto rounded-full bg-amber-100 text-ambar-600 flex items-center justify-center text-xl mb-3">
+                  <i class="fa-regular fa-credit-card"></i>
+                </div>
+                <h4 class="font-bold text-cafe-800 text-base">Todas las Tarjetas</h4>
+                <p class="text-xs text-cafe-600 mt-1">Débito y Crédito</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-crema-100 rounded-2xl p-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-cake-candles text-ambar-600 text-xl"></i>
+              <p class="text-sm text-cafe-800 font-medium">¿Pedidos especiales para eventos o cumpleaños?</p>
+            </div>
+            <a href="https://wa.me/5493434671607?text=Hola%20Todo%20Casero!%20Quiero%20consultar%20por%20un%20pedido%20para%20un%20evento." target="_blank" rel="noopener noreferrer"
+               class="shrink-0 text-xs font-bold bg-cafe-800 text-white px-4 py-2.5 rounded-xl hover:bg-ambar-600 transition-colors">
+              Consultar
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 6. UBICACIÓN Y CONTACTO ================= -->
+  <section id="ubicacion" class="py-20 bg-crema-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-ambar-600 font-bold text-xs uppercase tracking-widest">Dónde Encontrarnos</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-cafe-800 mt-2">
+          Te esperamos en Corrientes 156
+        </h2>
+        <p class="text-cafe-700 mt-2">
+          Acercate a nuestra panadería en Paraná o comunicate por cualquiera de nuestras vías de contacto.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        
+        <div class="lg:col-span-5 flex flex-col justify-between space-y-4">
+          
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-crema-200 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-ambar-100 text-ambar-600 flex items-center justify-center text-xl shrink-0">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-cafe-800 text-lg">Dirección</h3>
+              <p class="text-cafe-700 text-sm mt-0.5">Corrientes 156, Paraná, Entre Ríos</p>
+              <a href="https://www.google.com/maps/search/?api=1&query=Corrientes+156,+Parana,+Entre+Rios" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center gap-1 text-xs font-bold text-ambar-600 hover:underline mt-2">
+                <span>Cómo llegar en Google Maps</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+
+          <a href="https://wa.me/5493434671607?text=Hola%20Todo%20Casero!" target="_blank" rel="noopener noreferrer"
+             class="bg-white p-6 rounded-2xl shadow-sm border border-crema-200 hover:border-green-500 transition-all flex items-start gap-4 group">
+            <div class="w-12 h-12 rounded-xl bg-green-100 text-green-600 flex items-center justify-center text-2xl shrink-0 group-hover:bg-green-600 group-hover:text-white transition-colors">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-cafe-800 text-lg">WhatsApp Pedidos</h3>
+              <p class="text-cafe-700 text-sm mt-0.5">+54 9 3434 67-1607</p>
+              <span class="inline-block text-xs font-bold text-green-600 mt-2">Enviar mensaje directo →</span>
+            </div>
+          </a>
+
+          <a href="https://instagram.com/todocasero_parana" target="_blank" rel="noopener noreferrer"
+             class="bg-white p-6 rounded-2xl shadow-sm border border-crema-200 hover:border-pink-500 transition-all flex items-start gap-4 group">
+            <div class="w-12 h-12 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-2xl shrink-0 group-hover:bg-pink-600 group-hover:text-white transition-colors">
+              <i class="fa-brands fa-instagram"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-cafe-800 text-lg">Instagram</h3>
+              <p class="text-cafe-700 text-sm mt-0.5">@todocasero_parana</p>
+              <span class="inline-block text-xs font-bold text-pink-600 mt-2">Seguir y ver fotos →</span>
+            </div>
+          </a>
+
+          <a href="mailto:corrientes156tc@gmail.com"
+             class="bg-white p-6 rounded-2xl shadow-sm border border-crema-200 hover:border-ambar-600 transition-all flex items-start gap-4 group">
+            <div class="w-12 h-12 rounded-xl bg-crema-100 text-cafe-700 flex items-center justify-center text-xl shrink-0 group-hover:bg-cafe-800 group-hover:text-white transition-colors">
+              <i class="fa-regular fa-envelope"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-cafe-800 text-lg">Correo Electrónico</h3>
+              <p class="text-cafe-700 text-sm mt-0.5">corrientes156tc@gmail.com</p>
+              <span class="inline-block text-xs font-bold text-ambar-600 mt-2">Escribir un correo →</span>
+            </div>
+          </a>
+
+        </div>
+
+        <div class="lg:col-span-7 bg-white p-3 rounded-3xl shadow-md border border-crema-200 min-h-[380px] flex">
+          <iframe 
+            title="Ubicación Panadería Todo Casero en Corrientes 156, Paraná"
+            src="https://maps.google.com/maps?q=Corrientes%20156,%20Paran%C3%A1,%20Entre%20R%C3%ADos,%20Argentina&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+            class="w-full h-full min-h-[360px] rounded-2xl border-0" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 7. FOOTER ================= -->
+  <footer class="bg-cafe-900 text-crema-100 py-12 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10">
+        
+        <div class="flex items-center gap-3">
+          <img src="logo.png.jpg" 
+               onerror="handleLogoError(this)"
+               alt="Logo Panadería Todo Casero" 
+               class="w-12 h-12 rounded-full object-cover border border-ambar-500" />
+          <div>
+            <p class="font-serif text-xl font-bold text-white">Panadería Todo Casero</p>
+            <p class="text-xs text-crema-200">Corrientes 156, Paraná, Entre Ríos • Desde 1999</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <a href="https://instagram.com/todocasero_parana" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+             class="w-10 h-10 rounded-full bg-white/10 hover:bg-ambar-600 flex items-center justify-center text-white transition-colors">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://wa.me/5493434671607" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+             class="w-10 h-10 rounded-full bg-white/10 hover:bg-green-600 flex items-center justify-center text-white transition-colors">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+          <a href="mailto:corrientes156tc@gmail.com" aria-label="Email"
+             class="w-10 h-10 rounded-full bg-white/10 hover:bg-ambar-600 flex items-center justify-center text-white transition-colors">
+            <i class="fa-regular fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-crema-200/70 gap-2 text-center sm:text-left">
+        <p>© <span id="current-year"></span> Panadería Todo Casero. Más de 26 años compartiendo sabores en Paraná.</p>
+        <p>Elaboración propia de todos nuestros productos.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= 8. BARRA FLOTANTE INFERIOR DEL CARRITO ================= -->
+  <div id="sticky-cart-bar" class="fixed bottom-4 left-4 right-4 z-40 max-w-3xl mx-auto hidden">
+    <div class="bg-cafe-900/95 backdrop-blur-md text-white p-3.5 sm:px-6 sm:py-4 rounded-2xl shadow-2xl border border-ambar-500/40 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-ambar-600 flex items-center justify-center text-white text-lg shrink-0 relative">
+          <i class="fa-solid fa-basket-shopping"></i>
+          <span id="bar-cart-badge" class="absolute -top-1.5 -right-1.5 bg-green-500 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
+            0
+          </span>
+        </div>
+        <div>
+          <p id="bar-cart-items-text" class="text-xs text-crema-200 font-medium">0 productos seleccionados</p>
+          <p class="text-base sm:text-lg font-bold text-white leading-tight">
+            Total: <span id="bar-cart-total" class="text-amber-400">$0</span>
+          </p>
+        </div>
+      </div>
+
+      <button onclick="openCartModal()" 
+              class="bg-green-600 hover:bg-green-500 text-white font-bold px-5 sm:px-6 py-3 rounded-xl text-sm sm:text-base shadow-lg transition-all flex items-center gap-2 shrink-0">
+        <span>Ver Pedido</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= 9. MODAL / DRAWER DEL CARRITO DE COMPRAS ================= -->
+  <div id="cart-modal" class="fixed inset-0 z-50 hidden">
+    <!-- Fondo Oscuro -->
+    <div onclick="closeCartModal()" class="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"></div>
+
+    <!-- Panel Lateral Derecho -->
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div class="w-screen max-w-md bg-crema-50 shadow-2xl flex flex-col justify-between">
+        
+        <!-- Cabecera del Carrito -->
+        <div class="p-6 bg-cafe-800 text-white flex items-center justify-between border-b border-white/10">
+          <div class="flex items-center gap-3">
+            <i class="fa-solid fa-basket-shopping text-amber-400 text-xl"></i>
+            <div>
+              <h3 class="font-serif text-xl font-bold leading-none">Tu Pedido</h3>
+              <p class="text-xs text-crema-200 mt-1">Panadería Todo Casero • Paraná</p>
+            </div>
+          </div>
+          <button onclick="closeCartModal()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors" aria-label="Cerrar carrito">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Lista de Productos en el Carrito -->
+        <div id="cart-items-container" class="p-6 overflow-y-auto flex-1 space-y-4">
+          <!-- Se llena dinámicamente -->
+        </div>
+
+        <!-- Pie del Carrito y Formulario Rápido -->
+        <div id="cart-footer" class="p-6 bg-white border-t border-crema-200 space-y-4 shadow-inner">
+          
+          <!-- Datos Opcionales del Cliente -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="customer-name" class="block text-xs font-bold text-cafe-700 uppercase mb-1">Tu Nombre (Opcional)</label>
+              <input type="text" id="customer-name" placeholder="Ej: Juan" 
+                     class="w-full px-3.5 py-2 rounded-xl border border-crema-200 text-sm focus:border-ambar-600 focus:outline-none" />
+            </div>
+            <div>
+              <label for="delivery-mode" class="block text-xs font-bold text-cafe-700 uppercase mb-1">Modalidad</label>
+              <select id="delivery-mode" class="w-full px-3.5 py-2 rounded-xl border border-crema-200 text-sm bg-white focus:border-ambar-600 focus:outline-none">
+                <option value="Retiro en el local (Corrientes 156)">Retiro en el local</option>
+                <option value="Consultar envío a domicilio">Consultar envío</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Resumen de Total -->
+          <div class="flex items-center justify-between pt-2 border-t border-crema-100">
+            <button onclick="clearCart()" class="text-xs text-red-600 hover:underline font-semibold flex items-center gap-1">
+              <i class="fa-regular fa-trash-can"></i>
+              <span>Vaciar pedido</span>
+            </button>
+            <div class="text-right">
+              <span class="text-xs text-cafe-600 block">Total estimado</span>
+              <span id="modal-cart-total" class="font-serif text-2xl font-bold text-cafe-800">$0</span>
+            </div>
+          </div>
+
+          <!-- Botón Confirmar por WhatsApp -->
+          <button onclick="sendOrderWhatsApp()" 
+                  class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2.5 text-base">
+            <i class="fa-brands fa-whatsapp text-2xl"></i>
+            <span>Enviar Pedido por WhatsApp</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= LÓGICA JAVASCRIPT Y CONEXIÓN A GOOGLE SHEETS ================= -->
+  <script>
+    // 1. LOGO OFICIAL VECTORIAL DE RESPALDO (Para logo y favicon si no encuentra logo.png.jpg)
+    window.DEFAULT_LOGO_SVG = "data:image/svg+xml;utf8," + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="96" fill="#522808" stroke="#D97706" stroke-width="6"/>
+        <text x="100" y="38" text-anchor="middle" fill="#F5DEC4" font-family="Georgia, serif" font-size="13" letter-spacing="1">SINCE 1999</text>
+        <text x="100" y="86" text-anchor="middle" fill="#F5DEC4" font-family="Georgia, serif" font-style="italic" font-size="38">TODO</text>
+        <rect x="46" y="96" width="108" height="34" rx="5" fill="none" stroke="#F5DEC4" stroke-width="4"/>
+        <path d="M46 107 C24 103, 16 113, 16 113 C16 113, 24 123, 46 119" fill="none" stroke="#F5DEC4" stroke-width="4"/>
+        <path d="M154 107 C176 103, 184 113, 184 113 C184 113, 176 123, 154 119" fill="none" stroke="#F5DEC4" stroke-width="4"/>
+        <text x="100" y="121" text-anchor="middle" fill="#F5DEC4" font-family="Georgia, serif" font-weight="bold" font-size="23" letter-spacing="1">CASERO</text>
+        <text x="100" y="170" text-anchor="middle" fill="#F5DEC4" font-family="Georgia, serif" font-size="10.5">CORRIENTES 156, PARANÁ</text>
+      </svg>
+    `);
+
+    function handleLogoError(imgEl) {
+      if (imgEl.src.endsWith('logo.png.jpg')) {
+        imgEl.src = 'logo.png';
+      } else {
+        imgEl.onerror = null;
+        imgEl.src = window.DEFAULT_LOGO_SVG;
+        const fav = document.getElementById('dynamic-favicon');
+        if (fav) fav.href = window.DEFAULT_LOGO_SVG;
+      }
+    }
+
+    // Verificar favicon al iniciar para que nunca quede el ícono de Netlify
+    function verifyFavicon() {
+      const testImg = new Image();
+      testImg.onload = () => { document.getElementById('dynamic-favicon').href = 'logo.png.jpg'; };
+      testImg.onerror = () => {
+        const testPng = new Image();
+        testPng.onload = () => { document.getElementById('dynamic-favicon').href = 'logo.png'; };
+        testPng.onerror = () => { document.getElementById('dynamic-favicon').href = window.DEFAULT_LOGO_SVG; };
+        testPng.src = 'logo.png';
+      };
+      testImg.src = 'logo.png.jpg';
+    }
+
+    // 2. CONFIGURACIÓN DE GOOGLE SHEETS Y WHATSAPP
+    const RAW_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTYSYQxv916wAJ_hLcyEXX46XXbJghVWS8sroJIvp3uTJOy0XAsvMgWskNCFpRnb1KAIdpRw1kTn7-o/pub?output=csv";
+    const WHATSAPP_NUMBER = "5493434671607";
+
+    // 3. METADATOS Y FOTOS POR DEFECTO
+    const PRODUCT_METADATA = {
+      "torta frita": {
+        nombreMostrar: "Torta frita c/u",
+        categoria: "Clásicos",
+        descripcion: "Doradas, crocantes y con el punto justo de sal. El clásico infaltable para acompañar los mates.",
+        imagen: "https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=600&q=80"
+      },
+      "churros c/u": {
+        nombreMostrar: "Churros c/u",
+        categoria: "Clásicos",
+        descripcion: "Masa tradicional bien crujiente por fuera y tierna por dentro, espolvoreada con azúcar fina.",
+        imagen: "https://images.unsplash.com/photo-1624371414361-e670edf4898d?auto=format&fit=crop&w=600&q=80"
+      },
+      "churros rellenos": {
+        nombreMostrar: "Churros rellenos",
+        categoria: "Clásicos",
+        descripcion: "Generosamente colmados de puro dulce de leche repostero.",
+        imagen: "https://images.unsplash.com/photo-1541599188778-cdc73298e8fd?auto=format&fit=crop&w=600&q=80"
+      },
+      "facturas": {
+        nombreMostrar: "Facturas",
+        categoria: "Panadería Tradicional",
+        descripcion: "Variedad de medialunas, vigilantes y cañoncitos recién horneados con crema pastelera o dulce.",
+        imagen: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80"
+      },
+      "medialunas dulces": {
+        nombreMostrar: "Medialunas Dulces",
+        categoria: "Panadería Tradicional",
+        descripcion: "Esponjosas, humectadas con almíbar artesanal y el aroma a manteca de siempre.",
+        imagen: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80"
+      },
+      "pastelitos": {
+        nombreMostrar: "Pastelitos",
+        categoria: "Especialidades",
+        descripcion: "Masa hojaldrada super crocante, rellenos de dulce de membrillo o batata y bañados en almíbar.",
+        imagen: "https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80"
+      },
+      "suizos": {
+        nombreMostrar: "Suizos 1/4",
+        categoria: "Especialidades",
+        descripcion: "Delicados pancitos dulces suizos, tiernos y aromáticos, ideales para la merienda.",
+        imagen: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=600&q=80"
+      },
+      "medialuans saladas": {
+        nombreMostrar: "Medialunas saladas 1/4",
+        categoria: "Panadería Tradicional",
+        descripcion: "Crocantes y livianas con ese toque saladito irresistible para cualquier momento del día.",
+        imagen: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?auto=format&fit=crop&w=600&q=80"
+      },
+      "medialunas saladas": {
+        nombreMostrar: "Medialunas saladas 1/4",
+        categoria: "Panadería Tradicional",
+        descripcion: "Crocantes y livianas con ese toque saladito irresistible para cualquier momento del día.",
+        imagen: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?auto=format&fit=crop&w=600&q=80"
+      },
+      "pan kilo": {
+        nombreMostrar: "Pan kilo",
+        categoria: "Panadería Tradicional",
+        descripcion: "Corteza dorada y miga suave y aireada, elaborado a diario para la mesa familiar.",
+        imagen: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=600&q=80"
+      },
+      "pan galleta": {
+        nombreMostrar: "Pan Galleta Kilo",
+        categoria: "Panadería Tradicional",
+        descripcion: "El clásico entrerriano de cáscara firme y crocante, perfecto para acompañar cualquier comida.",
+        imagen: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=600&q=80"
+      },
+      "pepas": {
+        nombreMostrar: "Pepas 1/4",
+        categoria: "Galletitería",
+        descripcion: "Masitas secas mantecosas con un centro abundante de membrillo artesanal.",
+        imagen: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80"
+      },
+      "masa seca": {
+        nombreMostrar: "Masa seca 1/4",
+        categoria: "Galletitería",
+        descripcion: "Surtido fino de masitas secas artesanales con chocolate, nuez y mermeladas seleccionadas.",
+        imagen: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=600&q=80"
+      },
+      "masa madre": {
+        nombreMostrar: "Pan Masa madre c/u",
+        categoria: "Línea Artesanal",
+        descripcion: "Fermentación natural lenta, corteza rústica y miga alveolada con sabor profundo y digestivo.",
+        imagen: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb?auto=format&fit=crop&w=600&q=80"
+      },
+      "tortas": {
+        nombreMostrar: "Tortas",
+        categoria: "Pastelería",
+        descripcion: "Tartas y tortas artesanales enteras para celebraciones y cumpleaños (consultar variedades disponibles).",
+        imagen: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"
+      }
+    };
+
+    const FALLBACK_PRODUCTS = [
+      { nombre: "Torta frita c/u", categoria: "Clásicos", descripcion: "Doradas, crocantes y con el punto justo de sal. El clásico infaltable para acompañar los mates.", precio: "$700,00" },
+      { nombre: "Churros c/u", categoria: "Clásicos", descripcion: "Masa tradicional bien crujiente por fuera y tierna por dentro, espolvoreada con azúcar fina.", precio: "$700,00" },
+      { nombre: "Churros rellenos", categoria: "Clásicos", descripcion: "Generosamente colmados de puro dulce de leche repostero.", precio: "$1.000,00" },
+      { nombre: "Facturas", categoria: "Panadería Tradicional", descripcion: "Variedad de medialunas, vigilantes y cañoncitos recién horneados con crema pastelera o dulce.", precio: "$1.000,00" },
+      { nombre: "Medialunas Dulces", categoria: "Panadería Tradicional", descripcion: "Esponjosas, humectadas con almíbar artesanal y el aroma a manteca de siempre.", precio: "$1.000,00" },
+      { nombre: "Pastelitos", categoria: "Especialidades", descripcion: "Masa hojaldrada super crocante, rellenos de dulce de membrillo o batata y bañados en almíbar.", precio: "$1.000,00" },
+      { nombre: "Suizos 1/4", categoria: "Especialidades", descripcion: "Delicados pancitos dulces suizos, tiernos y aromáticos, ideales para la merienda.", precio: "$3.500,00" },
+      { nombre: "Medialunas saladas 1/4", categoria: "Panadería Tradicional", descripcion: "Crocantes y livianas con ese toque saladito irresistible para cualquier momento del día.", precio: "$4.000,00" },
+      { nombre: "Pan kilo", categoria: "Panadería Tradicional", descripcion: "Corteza dorada y miga suave y aireada, elaborado a diario para la mesa familiar.", precio: "$3.500,00" },
+      { nombre: "Pan Galleta Kilo", categoria: "Panadería Tradicional", descripcion: "El clásico entrerriano de cáscara firme y crocante, perfecto para acompañar cualquier comida.", precio: "$3.500,00" },
+      { nombre: "Pepas 1/4", categoria: "Galletitería", descripcion: "Masitas secas mantecosas con un centro abundante de membrillo artesanal.", precio: "$5.000,00" },
+      { nombre: "Masa seca 1/4", categoria: "Galletitería", descripcion: "Surtido fino de masitas secas artesanales con chocolate, nuez y mermeladas seleccionadas.", precio: "$5.000,00" },
+      { nombre: "Pan Masa madre c/u", categoria: "Línea Artesanal", descripcion: "Fermentación natural lenta, corteza rústica y miga alveolada con sabor profundo y digestivo.", precio: "$2.000,00" },
+      { nombre: "Tortas", categoria: "Pastelería", descripcion: "Tartas y tortas artesanales enteras para celebraciones y cumpleaños (consultar variedades disponibles).", precio: "$18.000,00" }
+    ];
+
+    let allProducts = [];
+    let cart = {}; // { [productId]: quantity }
+    let currentCategory = "Todos";
+    let searchQuery = "";
+
+    // Convierte precio texto ("$1.000,00" o "7000") en número entero en pesos
+    function parsePriceNumber(rawPrice) {
+      if (!rawPrice) return 0;
+      const str = String(rawPrice).trim();
+      if (str.includes(",")) {
+        const parts = str.split(",");
+        const intDigits = parts[0].replace(/[^\d]/g, "");
+        return intDigits ? Number(intDigits) : 0;
+      }
+      const digits = str.replace(/[^\d]/g, "");
+      return digits ? Number(digits) : 0;
+    }
+
+    function formatARS(amount) {
+      return "$" + Number(amount || 0).toLocaleString("es-AR");
+    }
+
+    function getCleanCsvUrl(url) {
+      let cleanUrl = url.replace(/\[\vert{}\]/g, '').trim();
+      if (cleanUrl.includes('/pubhtml')) {
+        cleanUrl = cleanUrl.replace('/pubhtml', '/pub?output=csv');
+      } else if (!cleanUrl.includes('output=csv')) {
+        cleanUrl += (cleanUrl.includes('?') ? '&' : '?') + 'output=csv';
+      }
+      return cleanUrl;
+    }
+
+    function enrichProduct(id, rawName, rawPrice, rawCat = "", rawDesc = "", rawImg = "") {
+      const cleanName = (rawName || "").trim();
+      const lowerName = cleanName.toLowerCase();
+      
+      let matchedMeta = null;
+      for (const key in PRODUCT_METADATA) {
+        if (lowerName.includes(key)) {
+          matchedMeta = PRODUCT_METADATA[key];
+          break;
+        }
+      }
+
+      const unitPrice = parsePriceNumber(rawPrice);
+
+      return {
+        id: id,
+        nombre: (matchedMeta && lowerName.includes("medialuans")) ? matchedMeta.nombreMostrar : cleanName,
+        categoria: rawCat.trim() || (matchedMeta ? matchedMeta.categoria : "Especialidades"),
+        descripcion: rawDesc.trim() || (matchedMeta ? matchedMeta.descripcion : "Elaboración propia artesanal horneada todos los días."),
+        precioNumerico: unitPrice,
+        precioTexto: unitPrice > 0 ? formatARS(unitPrice) : "Consultar",
+        imagen: rawImg.trim() || (matchedMeta ? matchedMeta.imagen : "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80")
+      };
+    }
+
+    function parseCSV(csvText) {
+      const lines = csvText.split(/\r?\n/).filter(line => line.trim() !== "");
+      if (lines.length < 2) return [];
+
+      const splitRow = (row) => {
+        const result = [];
+        let current = "";
+        let inQuotes = false;
+        for (let i = 0; i < row.length; i++) {
+          const char = row[i];
+          if (char === '"') {
+            inQuotes = !inQuotes;
+          } else if (char === ',' && !inQuotes) {
+            result.push(current.trim());
+            current = "";
+          } else {
+            current += char;
+          }
+        }
+        result.push(current.trim());
+        return result;
+      };
+
+      const headers = splitRow(lines[0]).map(h => h.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+      const idxProd = headers.findIndex(h => h.includes("prod") || h.includes("nombre") || h.includes("item"));
+      const idxPrecio = headers.findIndex(h => h.includes("prec") || h.includes("valor") || h.includes("costo"));
+      const idxCat = headers.findIndex(h => h.includes("cat") || h.includes("rubro"));
+      const idxDesc = headers.findIndex(h => h.includes("desc") || h.includes("detalle"));
+      const idxImg = headers.findIndex(h => h.includes("imag") || h.includes("foto") || h.includes("url"));
+
+      const items = [];
+      for (let i = 1; i < lines.length; i++) {
+        const cols = splitRow(lines[i]);
+        const name = cols[idxProd !== -1 ? idxProd : 0] || "";
+        const price = cols[idxPrecio !== -1 ? idxPrecio : (cols.length - 1)] || "";
+        const cat = idxCat !== -1 ? (cols[idxCat] || "") : "";
+        const desc = idxDesc !== -1 ? (cols[idxDesc] || "") : "";
+        const img = idxImg !== -1 ? (cols[idxImg] || "") : "";
+
+        if (name && name.toLowerCase() !== "producto") {
+          const slugId = "prod_" + i + "_" + name.toLowerCase().replace(/[^a-z0-9]/g, "");
+          items.push(enrichProduct(slugId, name, price, cat, desc, img));
+        }
+      }
+      return items;
+    }
+
+    async function loadProducts(manualRefresh = false) {
+      const icon = document.getElementById("refresh-icon");
+      if (manualRefresh && icon) icon.classList.add("fa-spin");
+
+      try {
+        const baseCsvUrl = getCleanCsvUrl(RAW_SHEET_URL);
+        const urlWithCacheBuster = `${baseCsvUrl}&_t=${Date.now()}`;
+        
+        let response;
+        try {
+          response = await fetch(urlWithCacheBuster, { cache: "no-store" });
+          if (!response.ok) throw new Error("Fallback URL");
+        } catch (_) {
+          response = await fetch(baseCsvUrl, { cache: "no-store" });
+        }
+
+        if (!response.ok) throw new Error("No se pudo leer el CSV");
+        const csvText = await response.text();
+        const parsed = parseCSV(csvText);
+
+        if (parsed.length > 0) {
+          allProducts = parsed;
+          document.getElementById("sheet-status").textContent = "Precios Sincronizados en Vivo";
+        } else {
+          throw new Error("CSV sin filas");
+        }
+      } catch (err) {
+        console.warn("Usando catálogo de respaldo:", err.message);
+        allProducts = FALLBACK_PRODUCTS.map((p, idx) => {
+          const slugId = "prod_" + (idx + 1) + "_" + p.nombre.toLowerCase().replace(/[^a-z0-9]/g, "");
+          return enrichProduct(slugId, p.nombre, p.precio, p.categoria, p.descripcion);
+        });
+        document.getElementById("sheet-status").textContent = "Catálogo Tradicional";
+      } finally {
+        if (icon) setTimeout(() => icon.classList.remove("fa-spin"), 400);
+      }
+
+      renderCategories();
+      renderProducts();
+      updateCartUI();
+    }
+
+    function renderCategories() {
+      const container = document.getElementById("category-filters");
+      const uniqueCats = ["Todos", ...new Set(allProducts.map(p => p.categoria))];
+
+      container.innerHTML = uniqueCats.map(cat => {
+        const isActive = cat === currentCategory;
+        return `
+          <button onclick="setCategory('${cat.replace(/'/g, "\\'")}')"
+                  class="px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all ${
+                    isActive 
+                      ? 'bg-cafe-800 text-white shadow-md' 
+                      : 'bg-white text-cafe-700 hover:bg-ambar-100 border border-crema-200'
+                  }">
+            ${cat}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      renderCategories();
+      renderProducts();
+    }
+
+    function resetFilters() {
+      currentCategory = "Todos";
+      searchQuery = "";
+      document.getElementById("search-input").value = "";
+      renderCategories();
+      renderProducts();
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById("products-grid");
+      const emptyState = document.getElementById("empty-state");
+
+      const filtered = allProducts.filter(p => {
+        const matchesCat = currentCategory === "Todos" || p.categoria === currentCategory;
+        const matchesSearch = p.nombre.toLowerCase().includes(searchQuery) ||
+                              p.descripcion.toLowerCase().includes(searchQuery) ||
+                              p.categoria.toLowerCase().includes(searchQuery);
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+      grid.innerHTML = filtered.map(item => {
+        const qty = cart[item.id] || 0;
+        return `
+          <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border ${qty > 0 ? 'border-ambar-600 ring-2 ring-ambar-500/20' : 'border-crema-200'} transition-all duration-300 flex flex-col justify-between group">
+            <div>
+              <div class="relative h-52 overflow-hidden bg-crema-100">
+                <img src="${item.imagen}" alt="${item.nombre}" loading="lazy"
+                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80';"
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <span class="absolute top-3 left-3 bg-cafe-900/80 backdrop-blur-sm text-amber-300 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                  ${item.categoria}
+                </span>
+                ${qty > 0 ? `
+                  <span class="absolute top-3 right-3 bg-green-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
+                    En tu pedido: ${qty}
+                  </span>
+                ` : ''}
+              </div>
+              <div class="p-6 pb-4">
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <h3 class="font-serif text-xl font-bold text-cafe-800 leading-snug">${item.nombre}</h3>
+                  <span class="bg-ambar-100 text-cafe-800 font-bold text-lg px-3 py-1 rounded-xl shrink-0">
+                    ${item.precioTexto}
+                  </span>
+                </div>
+                <p class="text-cafe-600 text-sm leading-relaxed">
+                  ${item.descripcion}
+                </p>
+              </div>
+            </div>
+
+            <!-- Selector de Cantidad (- / 0 / +) -->
+            <div class="px-6 pb-6 pt-2">
+              <div class="flex items-center justify-between bg-crema-100 rounded-2xl p-1.5 border border-crema-200">
+                <button onclick="changeQty('${item.id}', -1)" 
+                        aria-label="Restar unidad"
+                        class="w-11 h-11 rounded-xl font-bold text-lg flex items-center justify-center transition-all ${
+                          qty > 0 
+                            ? 'bg-white text-cafe-800 hover:bg-red-50 hover:text-red-600 shadow-xs' 
+                            : 'text-cafe-600/40 cursor-not-allowed'
+                        }">
+                  <i class="fa-solid fa-minus text-sm"></i>
+                </button>
+
+                <div class="text-center px-2">
+                  <span class="block text-xs text-cafe-600 font-medium">Cantidad</span>
+                  <span class="font-bold text-lg text-cafe-800">${qty}</span>
+                </div>
+
+                <button onclick="changeQty('${item.id}', 1)" 
+                        aria-label="Sumar unidad"
+                        class="w-11 h-11 rounded-xl bg-ambar-600 hover:bg-ambar-500 text-white font-bold text-lg flex items-center justify-center shadow-sm transition-all active:scale-95">
+                  <i class="fa-solid fa-plus text-sm"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    // ================= LÓGICA DEL CARRITO =================
+    function changeQty(productId, delta) {
+      const current = cart[productId] || 0;
+      const next = Math.max(0, current + delta);
+      if (next === 0) {
+        delete cart[productId];
+      } else {
+        cart[productId] = next;
+      }
+
+      renderProducts();
+      updateCartUI();
+
+      // Pequeña animación en el botón del carrito
+      const navBtn = document.getElementById("nav-cart-btn");
+      navBtn.classList.remove("cart-bump");
+      void navBtn.offsetWidth;
+      navBtn.classList.add("cart-bump");
+    }
+
+    function clearCart() {
+      cart = {};
+      renderProducts();
+      updateCartUI();
+      closeCartModal();
+    }
+
+    function getCartSummary() {
+      let totalItems = 0;
+      let totalPrice = 0;
+      const detailedItems = [];
+
+      for (const id in cart) {
+        const qty = cart[id];
+        const product = allProducts.find(p => p.id === id);
+        if (product && qty > 0) {
+          const subtotal = product.precioNumerico * qty;
+          totalItems += qty;
+          totalPrice += subtotal;
+          detailedItems.push({
+            ...product,
+            qty,
+            subtotal
+          });
+        }
+      }
+      return { totalItems, totalPrice, detailedItems };
+    }
+
+    function updateCartUI() {
+      const { totalItems, totalPrice, detailedItems } = getCartSummary();
+
+      // Navbar counter
+      document.getElementById("nav-cart-count").textContent = totalItems;
+
+      // Sticky bottom bar
+      const stickyBar = document.getElementById("sticky-cart-bar");
+      if (totalItems > 0) {
+        stickyBar.classList.remove("hidden");
+        document.getElementById("bar-cart-badge").textContent = totalItems;
+        document.getElementById("bar-cart-items-text").textContent = `${totalItems} ${totalItems === 1 ? 'producto seleccionado' : 'productos seleccionados'}`;
+        document.getElementById("bar-cart-total").textContent = formatARS(totalPrice);
+      } else {
+        stickyBar.classList.add("hidden");
+      }
+
+      // Modal content
+      const container = document.getElementById("cart-items-container");
+      const modalTotal = document.getElementById("modal-cart-total");
+      modalTotal.textContent = formatARS(totalPrice);
+
+      if (detailedItems.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-16">
+            <div class="w-16 h-16 rounded-full bg-crema-200/60 text-cafe-600 flex items-center justify-center mx-auto mb-4 text-2xl">
+              <i class="fa-solid fa-basket-shopping"></i>
+            </div>
+            <h4 class="font-serif text-lg font-bold text-cafe-800">Tu pedido está vacío</h4>
+            <p class="text-sm text-cafe-600 mt-1">Usá los botones + en el catálogo para agregar churros, tortas fritas o facturas.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = detailedItems.map(item => `
+        <div class="bg-white p-4 rounded-2xl border border-crema-200 shadow-xs flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3 min-w-0">
+            <img src="${item.imagen}" alt="${item.nombre}" class="w-14 h-14 rounded-xl object-cover shrink-0 border border-crema-200" />
+            <div class="min-w-0">
+              <h4 class="font-bold text-cafe-800 text-sm truncate">${item.nombre}</h4>
+              <p class="text-xs text-cafe-600">${item.precioTexto} c/u</p>
+              <p class="text-sm font-bold text-ambar-600 mt-0.5">${formatARS(item.subtotal)}</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 bg-crema-100 rounded-xl p-1 shrink-0">
+            <button onclick="changeQty('${item.id}', -1)" class="w-8 h-8 rounded-lg bg-white text-cafe-800 hover:text-red-600 font-bold text-xs flex items-center justify-center shadow-2xs">
+              <i class="fa-solid fa-minus"></i>
+            </button>
+            <span class="font-bold text-sm w-6 text-center">${item.qty}</span>
+            <button onclick="changeQty('${item.id}', 1)" class="w-8 h-8 rounded-lg bg-ambar-600 text-white font-bold text-xs flex items-center justify-center shadow-2xs">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function openCartModal() {
+      updateCartUI();
+      document.getElementById("cart-modal").classList.remove("hidden");
+    }
+
+    function closeCartModal() {
+      document.getElementById("cart-modal").classList.add("hidden");
+    }
+
+    function sendOrderWhatsApp() {
+      const { totalItems, totalPrice, detailedItems } = getCartSummary();
+      if (totalItems === 0) {
+        alert("Agregá al menos un producto al pedido antes de enviar.");
+        return;
+      }
+
+      const customerName = document.getElementById("customer-name").value.trim();
+      const deliveryMode = document.getElementById("delivery-mode").value;
+
+      let lines = ["¡Hola Panadería Todo Casero! Quiero realizar el siguiente pedido:", ""];
+      detailedItems.forEach(item => {
+        lines.push(`• ${item.qty}x ${item.nombre} (${formatARS(item.subtotal)})`);
+      });
+      lines.push("----------------------------");
+      lines.push(`*Total estimado: ${formatARS(totalPrice)}*`);
+      if (customerName) {
+        lines.push(`Cliente: ${customerName}`);
+      }
+      lines.push(`Modalidad: ${deliveryMode}`);
+      lines.push("");
+      lines.push("¿Tienen disponibilidad para confirmarlo? ¡Muchas gracias!");
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+      window.open(url, "_blank");
+    }
+
+    // ================= HORARIO EN VIVO (ARGENTINA) =================
+    function checkOpenStatus() {
+      const badge = document.getElementById("open-status-badge");
+      try {
+        const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Argentina/Buenos_Aires" }));
+        const day = now.getDay();
+        const minutes = now.getHours() * 60 + now.getMinutes();
+
+        const morningOpen = 6 * 60 + 45;
+        const morningClose = 14 * 60 + 30;
+        const afternoonOpen = 16 * 60;
+        const afternoonClose = 21 * 60 + 30;
+
+        let isOpen = false;
+        if (day === 0) {
+          isOpen = minutes >= afternoonOpen && minutes <= afternoonClose;
+        } else {
+          isOpen = (minutes >= morningOpen && minutes <= morningClose) ||
+                   (minutes >= afternoonOpen && minutes <= afternoonClose);
+        }
+
+        if (isOpen) {
+          badge.className = "px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-green-500/20 text-green-300 border border-green-400/30";
+          badge.innerHTML = '<span class="inline-block w-2 h-2 rounded-full bg-green-400 mr-1.5 animate-pulse"></span> Abierto Ahora';
+        } else {
+          badge.className = "px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/20 text-amber-200 border border-amber-400/30";
+          badge.innerHTML = '<i class="fa-regular fa-clock mr-1"></i> Cerrado en este momento';
+        }
+      } catch (e) {
+        badge.textContent = "Horarios Habituales";
+      }
+    }
+
+    // ================= INICIALIZACIÓN =================
+    document.addEventListener("DOMContentLoaded", () => {
+      verifyFavicon();
+      document.getElementById("current-year").textContent = new Date().getFullYear();
+      loadProducts();
+      checkOpenStatus();
+
+      // Buscador en tiempo real
+      document.getElementById("search-input").addEventListener("input", (e) => {
+        searchQuery = e.target.value.toLowerCase().trim();
+        renderProducts();
+      });
+
+      // Desplazar categorías horizontalmente con la ruedita del mouse
+      const catContainer = document.getElementById("category-filters");
+      catContainer.addEventListener("wheel", (e) => {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          catContainer.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+
+      // Menú móvil
+      const mobileBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      mobileBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+      document.querySelectorAll(".mobile-link").forEach(link => {
+        link.addEventListener("click", () => mobileMenu.classList.add("hidden"));
+      });
+    });
+  </script>
+</body>
+</html>
