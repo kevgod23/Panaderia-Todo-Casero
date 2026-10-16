@@ -80,18 +80,18 @@
 
   <!-- ================= 1. NAVBAR / ENCABEZADO ================= -->
   <header class="fixed top-0 left-0 right-0 z-40 bg-crema-50/95 backdrop-blur-md border-b border-crema-200 transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-20">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16 sm:h-20">
         
         <!-- Logo Oficial Todo Casero -->
-        <a href="#" class="flex items-center gap-3 group">
+        <a href="#" class="flex items-center gap-2 sm:gap-3 group min-w-0">
           <img src="logo.png.jpg" 
                onerror="handleLogoError(this)"
                alt="Logo Panadería Todo Casero" 
-               class="w-13 h-13 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-ambar-600 shadow-md transition-transform group-hover:scale-105" />
-          <div>
-            <span class="font-serif text-xl sm:text-2xl font-bold text-cafe-800 tracking-tight block leading-none">Todo Casero</span>
-            <span class="text-[11px] sm:text-xs text-cafe-600 font-medium tracking-wider uppercase">Desde 1999 • Paraná</span>
+               class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-ambar-600 shadow-sm shrink-0 transition-transform group-hover:scale-105" />
+          <div class="min-w-0">
+            <span class="font-serif text-lg sm:text-2xl font-bold text-cafe-800 tracking-tight block leading-tight truncate">Todo Casero</span>
+            <span class="text-[10px] sm:text-xs text-cafe-600 font-medium tracking-wider uppercase block truncate">Desde 1999 • Paraná</span>
           </div>
         </a>
 
@@ -104,19 +104,19 @@
         </nav>
 
         <!-- Acciones Derecha (Botón Carrito + Menú Móvil) -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
           <button onclick="openCartModal()" id="nav-cart-btn"
-                  class="relative inline-flex items-center gap-2.5 bg-cafe-800 hover:bg-ambar-600 text-white font-semibold px-4 sm:px-5 py-2.5 rounded-full shadow-sm transition-all duration-200">
-            <i class="fa-solid fa-basket-shopping text-amber-400"></i>
+                  class="relative inline-flex items-center gap-2 bg-cafe-800 hover:bg-ambar-600 text-white font-semibold px-3 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-sm transition-all duration-200">
+            <i class="fa-solid fa-basket-shopping text-amber-400 text-sm sm:text-base"></i>
             <span class="hidden sm:inline text-sm">Mi Pedido</span>
-            <span id="nav-cart-count" class="bg-ambar-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">
+            <span id="nav-cart-count" class="bg-ambar-600 text-white text-xs font-bold w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center">
               0
             </span>
           </button>
 
           <!-- Botón Menú Móvil -->
           <button id="mobile-menu-btn" class="md:hidden text-cafe-800 p-2 rounded-xl hover:bg-crema-100 focus:outline-none" aria-label="Abrir menú">
-            <i class="fa-solid fa-bars text-2xl"></i>
+            <i class="fa-solid fa-bars text-xl"></i>
           </button>
         </div>
 
@@ -138,7 +138,7 @@
   </header>
 
   <!-- ================= 2. HERO SECTION (PORTADA) ================= -->
-  <section class="hero-bg relative pt-32 pb-20 md:pt-40 md:pb-28 text-crema-50">
+  <section class="hero-bg relative pt-28 pb-20 md:pt-40 md:pb-28 text-crema-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       
       <div class="inline-flex items-center gap-2 bg-ambar-600/20 border border-ambar-500/40 backdrop-blur-sm px-4 py-1.5 rounded-full text-ambar-100 text-sm font-medium mb-6">
@@ -267,7 +267,6 @@
   <section id="productos" class="py-20 bg-crema-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Encabezado -->
       <div class="text-center max-w-3xl mx-auto mb-10">
         <div class="inline-flex items-center gap-2 bg-ambar-100 text-ambar-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
           <span class="w-2 h-2 rounded-full bg-ambar-600 animate-ping"></span>
@@ -581,14 +580,11 @@
 
   <!-- ================= 9. MODAL / DRAWER DEL CARRITO DE COMPRAS ================= -->
   <div id="cart-modal" class="fixed inset-0 z-50 hidden">
-    <!-- Fondo Oscuro -->
     <div onclick="closeCartModal()" class="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"></div>
 
-    <!-- Panel Lateral Derecho -->
     <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
       <div class="w-screen max-w-md bg-crema-50 shadow-2xl flex flex-col justify-between">
         
-        <!-- Cabecera del Carrito -->
         <div class="p-6 bg-cafe-800 text-white flex items-center justify-between border-b border-white/10">
           <div class="flex items-center gap-3">
             <i class="fa-solid fa-basket-shopping text-amber-400 text-xl"></i>
@@ -602,15 +598,10 @@
           </button>
         </div>
 
-        <!-- Lista de Productos en el Carrito -->
         <div id="cart-items-container" class="p-6 overflow-y-auto flex-1 space-y-4">
-          <!-- Se llena dinámicamente -->
         </div>
 
-        <!-- Pie del Carrito y Formulario Rápido -->
         <div id="cart-footer" class="p-6 bg-white border-t border-crema-200 space-y-4 shadow-inner">
-          
-          <!-- Datos Opcionales del Cliente -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label for="customer-name" class="block text-xs font-bold text-cafe-700 uppercase mb-1">Tu Nombre (Opcional)</label>
@@ -626,7 +617,6 @@
             </div>
           </div>
 
-          <!-- Resumen de Total -->
           <div class="flex items-center justify-between pt-2 border-t border-crema-100">
             <button onclick="clearCart()" class="text-xs text-red-600 hover:underline font-semibold flex items-center gap-1">
               <i class="fa-regular fa-trash-can"></i>
@@ -638,7 +628,6 @@
             </div>
           </div>
 
-          <!-- Botón Confirmar por WhatsApp -->
           <button onclick="sendOrderWhatsApp()" 
                   class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2.5 text-base">
             <i class="fa-brands fa-whatsapp text-2xl"></i>
@@ -652,7 +641,6 @@
 
   <!-- ================= LÓGICA JAVASCRIPT Y CONEXIÓN A GOOGLE SHEETS ================= -->
   <script>
-    // 1. LOGO OFICIAL VECTORIAL DE RESPALDO (Para logo y favicon si no encuentra logo.png.jpg)
     window.DEFAULT_LOGO_SVG = "data:image/svg+xml;utf8," + encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
         <circle cx="100" cy="100" r="96" fill="#522808" stroke="#D97706" stroke-width="6"/>
@@ -677,7 +665,6 @@
       }
     }
 
-    // Verificar favicon al iniciar para que nunca quede el ícono de Netlify
     function verifyFavicon() {
       const testImg = new Image();
       testImg.onload = () => { document.getElementById('dynamic-favicon').href = 'logo.png.jpg'; };
@@ -690,11 +677,9 @@
       testImg.src = 'logo.png.jpg';
     }
 
-    // 2. CONFIGURACIÓN DE GOOGLE SHEETS Y WHATSAPP
     const RAW_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTYSYQxv916wAJ_hLcyEXX46XXbJghVWS8sroJIvp3uTJOy0XAsvMgWskNCFpRnb1KAIdpRw1kTn7-o/pub?output=csv";
     const WHATSAPP_NUMBER = "5493434671607";
 
-    // 3. METADATOS Y FOTOS POR DEFECTO
     const PRODUCT_METADATA = {
       "torta frita": {
         nombreMostrar: "Torta frita c/u",
@@ -806,11 +791,10 @@
     ];
 
     let allProducts = [];
-    let cart = {}; // { [productId]: quantity }
+    let cart = {};
     let currentCategory = "Todos";
     let searchQuery = "";
 
-    // Convierte precio texto ("$1.000,00" o "7000") en número entero en pesos
     function parsePriceNumber(rawPrice) {
       if (!rawPrice) return 0;
       const str = String(rawPrice).trim();
@@ -1077,7 +1061,6 @@
       renderProducts();
       updateCartUI();
 
-      // Pequeña animación en el botón del carrito
       const navBtn = document.getElementById("nav-cart-btn");
       navBtn.classList.remove("cart-bump");
       void navBtn.offsetWidth;
@@ -1116,10 +1099,8 @@
     function updateCartUI() {
       const { totalItems, totalPrice, detailedItems } = getCartSummary();
 
-      // Navbar counter
       document.getElementById("nav-cart-count").textContent = totalItems;
 
-      // Sticky bottom bar
       const stickyBar = document.getElementById("sticky-cart-bar");
       if (totalItems > 0) {
         stickyBar.classList.remove("hidden");
@@ -1130,7 +1111,6 @@
         stickyBar.classList.add("hidden");
       }
 
-      // Modal content
       const container = document.getElementById("cart-items-container");
       const modalTotal = document.getElementById("modal-cart-total");
       modalTotal.textContent = formatARS(totalPrice);
@@ -1248,13 +1228,11 @@
       loadProducts();
       checkOpenStatus();
 
-      // Buscador en tiempo real
       document.getElementById("search-input").addEventListener("input", (e) => {
         searchQuery = e.target.value.toLowerCase().trim();
         renderProducts();
       });
 
-      // Desplazar categorías horizontalmente con la ruedita del mouse
       const catContainer = document.getElementById("category-filters");
       catContainer.addEventListener("wheel", (e) => {
         if (e.deltaY !== 0) {
@@ -1263,7 +1241,6 @@
         }
       }, { passive: false });
 
-      // Menú móvil
       const mobileBtn = document.getElementById("mobile-menu-btn");
       const mobileMenu = document.getElementById("mobile-menu");
       mobileBtn.addEventListener("click", () => {
